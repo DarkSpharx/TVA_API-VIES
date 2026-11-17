@@ -13,8 +13,7 @@
 
 ## 16/11/2026 — Phase 1 : Exploration (`exploration.ipynb`)
 
-**Source de vérité (Q1)**
-- CSV = Excel (`df_csv.equals(df_xlsx) → True`)
+**Choix de la source (Q1)**
 - Choix du CSV : plus léger, sans reformatage Excel
 
 **Pays déclarés (Q2)**
@@ -27,7 +26,9 @@
 
 **Caractères parasites (Q3)**
 - 18,13 % des lignes contiennent un caractère non alphanumérique
-  - Espaces : 2 236 — Tirets : 471 — Points : 404
+  - Espaces : 2 236 
+  - Tirets : 471
+  - Points : 404
 
 **Valeurs vides (Q4)**
 - `pandas` convertit `null` et `N/A` en `NaN` au chargement
@@ -36,14 +37,10 @@
 
 **Incohérences pays / préfixe (Q5)**
 - Sans `.strip().upper()` : 1 645 faux positifs
-- 793 vraies incohérences (7,93 %) :
-  - ~532 préfixe pays omis
-  - ~261 valeurs vides
-  - 1 vrai conflit de pays
+- 793 véritables incohérences
 
-**Canaux et temporalité (Q6)**
-- 5 canaux homogènes (~2 000 lignes chacun, taux d'anomalies identiques)
-  - Aucun canal ne valide à la saisie → défaillance systémique
+**Canaux de saisie et périmètre temporel (Q6)**
+- Canaux de saisie homogènes (~2 000 lignes chacun, taux d'anomalies identiques)
 - 21 mois : 01/01/2024 → 01/10/2025, ~475 saisies/mois
 
 ---
@@ -51,7 +48,6 @@
 ## 17/11/2026 — Phase 2 : Nettoyage (`nettoyage.ipynb`)
 
 **Restructuration**
-- `validation_structure.py` déplacé de la racine vers `api/`
 - Import dans les notebooks : `sys.path.append(str(Path("../api").resolve()))`
 
 **Blocage résolu — `normaliser()` plante sur les `NaN`**
