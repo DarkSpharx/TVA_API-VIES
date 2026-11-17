@@ -1,56 +1,28 @@
-# ================================================================================
 # Environnements virtuels
-# ================================================================================
-venv/
 .venv/
+venv/
 env/
-ENV/
-env.bak/
-venv.bak/
 
-# ================================================================================
 # Python (bytecode, cache)
-# ================================================================================
 __pycache__/
+**/__pycache__/
 *.py[cod]
-*$py.class
 *.pyd
 
-# ================================================================================
-# Jupyter Notebooks
-# ================================================================================
+# Jupyter
 .ipynb_checkpoints/
-*/.ipynb_checkpoints/*
+**/.ipynb_checkpoints/
 
-# ================================================================================
-# Fichiers de configuration & secrets
-# ================================================================================
+# Secrets & logs
 .env
 .env.local
 *.log
 
-# ================================================================================
-# Données & Exports (Selon vos besoins)
-# ================================================================================
-# Ignorer les résultats/exports volumineux ou temporaires (décommenter si nécessaire) :
-# data/exports/
-# data/processed/
-# *.parquet
-
-# Si vous souhaitez conserver les fichiers de base fournis dans le repo :
-# data/numeros_tva.csv et data/numeros_tva.xlsx restent suivis par Git.
-
-# ================================================================================
-# IDE & Éditeurs
-# ================================================================================
+# IDE
 .vscode/
 .idea/
-*.sublime-project
-*.sublime-workspace
 
-# ================================================================================
-# Fichiers système (OS)
-# ================================================================================
+# OS
+.DS_Store
 Thumbs.db
 Desktop.ini
-.DS_Store
