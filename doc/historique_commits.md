@@ -38,3 +38,5 @@
   - Ajout de l'historique des commits pour le livrable.
 ---
 - `1c0ddf0` : correction graph et notebook analyse ajout de l'historique des commits
+---
+- `d764095` : maj de l'historique des commits et commit de fin de journée
