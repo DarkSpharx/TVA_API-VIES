@@ -1,7 +1,7 @@
 # Historique des commits
 
 Voici l'historique des travaux réalisés sur les deux jours de mission :
-
+- `456a4be` Phase 3 et 4 : finalisation collecte API, rapport réconciliation et documentation finale - Finalisation du script api/collecte.py avec normalisation et reprise intelligente. - Ajout du rapport de réconciliation et de la note de synthèse. - Création du journal de bord complet avec glossaire. - Ajout de l'historique des commits pour le livrable.
 - `cd19e64` Phase 2 : 5 sur 6 maj du journal de bord et ajout d'un dossier de capture
 - `fb7c206` Etape 2 question 2 sur 6 maj : journal de bord et gitignore
 - `ffd9094` nettoyer gitignore et création du journal de bord dans /doc
