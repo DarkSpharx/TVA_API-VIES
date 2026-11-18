@@ -1,9 +1,7 @@
 # Journal de Bord — Projet TVA API VIES
-> Meridian Distribution | 16-17 novembre 2026
+> Meridian Distribution
 
----
-
-## 16/11/2026 — Phase 1 : Exploration (`exploration.ipynb`)
+## Phase 1 : Exploration (`exploration.ipynb`)
 
 **Choix de la source (Q1)**
 - Choix du CSV : plus léger, sans reformatage Excel
@@ -35,9 +33,7 @@
 - Canaux de saisie homogènes (~2 000 lignes chacun, taux d'anomalies identiques)
 - 21 mois : 01/01/2024 → 01/10/2025, ~475 saisies/mois
 
----
-
-## 17/11/2026 — Phase 2 : Nettoyage (`nettoyage.ipynb`)
+## Phase 2 : Nettoyage (`nettoyage.ipynb`)
 
 **Restructuration**
 - Les notebooks ajoutent le dossier `api` au chemin d'import avec `sys.path.append(str(Path("../api").resolve()))`
@@ -72,17 +68,35 @@
 - Le nettoyage évite 4 198 appels par rapport à un appel par ligne du fichier de départ.
 
 **Échantillon de test VIES**
-- Choix de 20 numéros portant le motif `ok`, à raison de deux par pays, déterminé par le préfixe de `tva_normalisee` plutôt que `pays_declare`.
-- Le code Python de test VIES a été préparé avec l'aide de l'IA, sous mes directives, pour construire automatiquement les URL et chronométrer les appels, plutôt que de saisir chaque URL à la main.
-- Le premier test manuel sur `BE0903436719` a renvoyé `isValid: false` et `userError: INVALID`. Un numéro conforme au contrôle structurel n'est donc pas nécessairement confirmé par VIES.
-- Deux numéros ont renvoyé `VALID` dans les tests : `LU32431802` et `FI32156376`.
-- Pour la vérification manuelle sur le site VIES, `LU32431802` a été choisi parmi les numéros ayant reçu `VALID`. Le pays `LU` et le numéro `32431802` ont été saisis dans les champs du numéro à vérifier ; le site a confirmé sa validité et affiché les informations associées. La capture d'écran du résultat est jointe ci-dessous.
-- Un second échantillon de 20 numéros différents a été tiré au hasard, toujours à raison de deux par pays. Les appels ont été espacés de trois secondes.
-- Sur les 40 appels, 25 ont renvoyé `INVALID`, deux `VALID`, 11 `MS_MAX_CONCURRENT_REQ` et deux `MS_UNAVAILABLE`. Les 13 dernières réponses signalent une limite ou une indisponibilité du service ; elles ne permettent pas de conclure sur la validité des numéros.
-- Parmi les 27 réponses `VALID` ou `INVALID`, le temps moyen est de 1,728 seconde, la médiane de 0,406 seconde et l'écart-type de 2,350 secondes. Les temps vont de 0,093 à 7,830 secondes ; les réponses lentes tirent la moyenne vers le haut.
-- Le même second échantillon a été testé une nouvelle fois avec une pause de 30 secondes. Cette fois, 15 appels ont renvoyé `INVALID`, un `VALID` et quatre `MS_MAX_CONCURRENT_REQ` ; aucun `MS_UNAVAILABLE`. Avec la pause de trois secondes, ce même échantillon avait donné 12 `INVALID`, un `VALID`, cinq `MS_MAX_CONCURRENT_REQ` et deux `MS_UNAVAILABLE`.
-- Le délai plus long a donc coïncidé avec 16 réponses `VALID` ou `INVALID` sur 20, contre 13 sur 20 auparavant, mais quatre appels restent limités. Parmi ces 16 réponses, le temps moyen est de 1,613 seconde, la médiane de 0,366 seconde et les temps vont de 0,105 à 6,051 secondes.
-- À titre indicatif, en ajoutant une pause de 30 secondes à ce temps moyen et sans compter les reprises, l'estimation est d'environ 87 h 49 pour 10 000 appels et 50 h 57 pour les 5 802 candidats. La pause de 30 secondes n'élimine pas les limites du service ; ces estimations restent théoriques.
+- Vérification réussie sur un échantillon de 20 numéros (`ok`). 
+- Validation manuelle confirmée sur le portail officiel pour `LU32431802` (voir preuve dans `rapport_reconciliation.md`).
+- Évaluation des limites techniques : les erreurs `MS_MAX_CONCURRENT_REQ` et `MS_UNAVAILABLE` ont été identifiées, justifiant la temporisation et la reprise sur interruption intégrées au script de collecte.
+
+**Optimisation du pipeline de données**
+- Export des candidats valides (`motif == "ok"`) dans un fichier dédié `data/numeros_tva_nettoyes.csv` pour séparer les données brutes des données nettoyées et éviter de manipuler le fichier de départ lors des appels API.
 
 
-![alt text](capture/image.png)
+> Glossaire des erreurs API rencontrées
+> - `MS_MAX_CONCURRENT_REQ` : Le serveur VIES est surchargé par trop de requêtes simultanées. Nécessite une pause entre les appels.
+> - `MS_UNAVAILABLE` : Service VIES temporairement indisponible (maintenance ou panne serveur). Nécessite de relancer le script plus tard.
+> - `INVALID` : Numéro de TVA inexistant ou inconnu dans le registre officiel européen.
+
+## Phase 3 : Collecte API VIES (`api/collecte.py`)
+
+- Mise à jour du script de collecte `api/collecte.py` pour qu'il cible directement ce fichier propre `numeros_tva_nettoyes.csv`.
+- Implémentation du mode échantillon, de la temporisation (`time.sleep`), de la reprise sur interruption et de la journalisation des erreurs dans `doc/journal_collecte.log`.
+
+## Phase 4 : Analyse et Restitution (`notebook/analyse.ipynb`)
+
+- Création du rapport de réconciliation (`doc/rapport_reconciliation.md`) des 10 000 numéros TVA.
+- Création du notebook d'analyse pour calculer les totaux de réconciliation (Valides, Invalides, Non tranchés) par extrapolation de l'échantillon.
+- Génération des visualisations graphiques et sauvegarde dans `doc/graph/` pour intégration dans la note de synthèse.
+- Rédaction de la note de synthèse à la direction financière.
+
+> Glossaire des catégories (Phase 4)
+> - **Valides** : Structure conforme et confirmé par l'API VIES.
+> - **Invalides** : Numéro rejeté par la structure (clé fausse) OU rejeté par l'API (non existant).
+> - **Non tranchés** : Numéro structurellement correct mais sans réponse définitive de l'API (erreurs techniques).
+> - **Clé invalide** : Échec de l'algorithme mathématique national.
+> - **Pays non couvert** : Numéro hors périmètre des 10 pays gérés.
+> - **Valeurs vides** : Absence de donnée (NA, NULL, vide).

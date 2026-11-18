@@ -1,0 +1,12 @@
+# Historique des commits
+
+Voici l'historique des travaux réalisés sur les deux jours de mission :
+
+- `cd19e64` Phase 2 : 5 sur 6 maj du journal de bord et ajout d'un dossier de capture
+- `fb7c206` Etape 2 question 2 sur 6 maj : journal de bord et gitignore
+- `ffd9094` nettoyer gitignore et création du journal de bord dans /doc
+- `7f5d194` Début de la phase 2 : - Deplacement de validation_structure.py dans le dossier api/ - Initialisation du notebook nettoyage.ipynb - Configuration des imports
+- `bac1669` Phase 1 : OK ! - Choix du CSV comme source - Analyse des pays declares et identification des 10 pays UE eligibles - Mesure du bruit de saisie (18,13% de TVA non conformes) - Typage des 6 formes de valeurs vides (261 cas) - Analyse des 793 incoherences pays/prefixe - Analyse de l homogeneite des canaux de saisie et de la temporalite2024-2025
+- `3946cab` feat: phase 1 - exploration et audit du referentiel TVA - Choix du CSV comme source de verite (performance et fidelite des types) - Identification des 10 pays UE eligibles et mise en evidence des codes fictifs (ZZ, QQ, XX) et hors-UE (GB, UK) - Mesure de 18,13% de numeros pollues par des caracteres non conformes (espaces, tirets, points) - Decouverte de 261 valeurs vides reparties sous 6 formes differentes - Identification de 793 incoherences entre pays declare et prefixe TVA (dont 532 omissions du code pays) - Analyse de l homogeneite parfaite des canauxde saisie et stabilite du flux mensuel 2024-2025
+- `1a1bb90` Ajout d'un notebook d'exploration pour l'analyse du CSV Question 4 sur 6
+- `09da6a5` Initialisation du projet de validation TVA VIES et configuration environnement

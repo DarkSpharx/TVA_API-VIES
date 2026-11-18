@@ -1,0 +1,25 @@
+{
+  "contexte": {
+    "projet": "TVA_API-VIES (Meridian Distribution)",
+    "objectif": "Auditer un référentiel de 10 000 numéros de TVA intracommunautaire en utilisant le service officiel VIES (Commission européenne).",
+    "role_utilisateur": "Apprenant en formation Data Analyst (débutant sur Python et Pandas).",
+    "pedagogie_attendue": "Guider l'utilisateur pas à pas avec des phrases simples et courtes. Utiliser des listes à puces ou numérotées. Écrire du code simple, propre et commenté, adapté à un niveau débutant/junior (pas de fonctions trop complexes ou de syntaxes ésotériques)."
+  },
+  "avancement": {
+    "phase_1_exploration": "Terminée (analysé dans exploration.ipynb : 15 pays, 18.13% de caractères parasites, 261 vides, 793 incohérences pays/préfixe).",
+    "phase_2_nettoyage": "Terminée (analysé dans nettoyage.ipynb : normalisation, suppression de 438 doublons -> 9 562 lignes uniques, validation structurelle : 5 802 ok, 2 499 cle_invalide, 1000 pays_non_couvert, 261 vide).",
+    "phase_3_collecte_vies": "En cours / Échantillon testé (tests manuels et premiers tests via API sur un échantillon de 20/40 numéros, mesure des temps de réponse et gestion des codes d'erreur de l'API comme MS_MAX_CONCURRENT_REQ).",
+    "phase_4_analyse_et_restitution": "À venir."
+  },
+  "livrables": {
+    " depot_github_public ": true,
+    "notebook_exploration": true,
+    "notebook_analyse": "En cours (nettoyage.ipynb)",
+    "script_collecte_vies": "Partiel / en cours de structuration",
+    "fichier_resultats_vies": "Partiel (généré sur l'échantillon)",
+    "rapport_de_reconciliation": false,
+    "note_direction_financiere": false,
+    "journal_de_bord": true
+  },
+  "instructions_pour_ia_suivante": "L'utilisateur souhaite apprendre en faisant. Utiliser une approche socratique : poser des questions orientées, expliquer simplement le vocabulaire Pandas/Python, ne pas faire les exercices à sa place mais valider ses propositions et le féliciter."
+}
